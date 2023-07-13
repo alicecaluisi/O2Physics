@@ -62,9 +62,7 @@ struct JetTutorialSkeletonTask {
                               {"h_matched_jets_pt", "#it{p}_{T,jet part}; #it{p}_{T,jet det}", {HistType::kTH2F, {{100, 0., 20.}, {100, 0., 20.0}}}},
                               {"h_matched_jets_eta", "#eta_{jet part}; #eta_{jet det}", {HistType::kTH2F, {{30, -1.5, 1.5}, {30, -1.5, 1.5}}}},
                               {"h_matched_jets_phi", "#phi_{jet part}; #phi_{jet det}", {HistType::kTH2F, {{140, -7.0, 7.}, {140, -7.0, 7.}}}},
-                              {"h_dPhi", "dPhi;#Delta#phi;entries", {HistType::kTH1F, {{100, -TMath::Pi(), TMath::Pi()}}}}
-                              }
-                            };
+                              {"h_dPhi", "dPhi;#Delta#phi;entries", {HistType::kTH1F, {{100, -TMath::Pi(), TMath::Pi()}}}}}};
 
   Configurable<float> jetPtMin{"jetPtMin", 5.0, "minimum jet pT cut"};
   Configurable<float> jetR{"jetR", 0.4, "jet resolution parameter"};
@@ -138,10 +136,10 @@ struct JetTutorialSkeletonTask {
     registry.fill(HIST("h_jet_ntracks"), jet.tracks().size());
     double angularity = 0.0;
     for (auto& jetConstituent : jet.tracks_as<aod::Tracks>()) {
-      
+
       double dPhi = jetConstituent.phi() - jet.phi();
       registry.fill(HIST("h_dPhi"), AngularDistance(dPhi));
-      
+
       angularity += jetConstituent.pt() * TMath::Sqrt(TMath::Power(dPhi, 2.0) + TMath::Power(jetConstituent.eta() - jet.eta(), 2.0));
     }
 
